@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using SoapApi.Contracts;
+using SoapApi.Data;
 using SoapApi.Services;
 using SoapCore;
 
@@ -20,9 +22,18 @@ namespace SoapApi
             // SOAP
             builder.Services.AddSoapCore();
 
-            builder.Services.AddSingleton<
+            builder.Services.AddScoped<
                 ISupplierPurchaseOrderService,
                 SupplierPurchaseOrderService>();
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseMySql(
+                builder.Configuration.GetConnectionString("DefaultConnection"),
+                ServerVersion.AutoDetect(
+                    builder.Configuration.GetConnectionString("DefaultConnection")
+                )
+            ));
+
 
             var app = builder.Build();
 

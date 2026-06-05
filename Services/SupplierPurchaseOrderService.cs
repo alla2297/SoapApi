@@ -1,15 +1,40 @@
 ﻿using SoapApi.Contracts;
+using SoapApi.Data;
+using SoapApi.DTO.Requests;
+using SoapApi.DTO.Responses;
+using SoapApi.Faults;
+using SoapApi.Models;
+using System.ServiceModel;
 
 namespace SoapApi.Services;
 
 public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
 {
-    public GetSupplierByIdResponse GetSupplierById(GetSupplierByIdRequest request)
+    private readonly AppDbContext _context;
+    public SupplierPurchaseOrderService(AppDbContext context)
     {
+        _context = context;
+    }
+
+    public GetSupplierByIdResponse GetSupplierById(
+    GetSupplierByIdRequest request)
+    {
+        var supplier = _context.Suppliers
+            .FirstOrDefault(s => s.SupplierId == request.SupplierId);
+
+        if (supplier == null)
+        {
+            throw new FaultException<SupplierNotFoundFault>(
+                new SupplierNotFoundFault
+                {
+                    Message = "Supplier not found"
+                });
+        }
+
         return new GetSupplierByIdResponse
         {
-            SupplierId = request.SupplierId,
-            Name = "Test Supplier"
+            SupplierId = supplier.SupplierId,
+            Name = supplier.Name
         };
     }
 
@@ -20,11 +45,38 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     }
 
     public CreatePurchaseOrderResponse CreatePurchaseOrder(
-        CreatePurchaseOrderRequest request)
+      CreatePurchaseOrderRequest request)
     {
-        throw new NotImplementedException();
-    }
+        var supplier = _context.Suppliers
+            .FirstOrDefault(s => s.SupplierId == request.SupplierId);
 
+        if (supplier == null)
+        {
+            throw new FaultException<SupplierNotFoundFault>(
+                new SupplierNotFoundFault
+                {
+                    Message = "Supplier not found"
+                });
+        }
+
+        var order = new PurchaseOrder
+        {
+            SupplierId = request.SupplierId,
+            TotalAmount = request.TotalAmount,
+            Status = "Pending",
+            CreatedDate = DateTime.UtcNow
+        };
+
+        _context.PurchaseOrders.Add(order);
+        _context.SaveChanges();
+
+        return new CreatePurchaseOrderResponse
+        {
+            PurchaseOrderId = order.PurchaseOrderId,
+            Message = "Purchase order created successfully"
+        };
+    }
+    // TOODO 
     public UpdatePurchaseOrderStatusResponse UpdatePurchaseOrderStatus(
         UpdatePurchaseOrderStatusRequest request)
     {

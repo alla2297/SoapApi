@@ -3,7 +3,7 @@ using System.ServiceModel;
 
 namespace SoapApi.Contracts
 {
-
+    [ServiceContract(Namespace = "http://library.soapapi.org/")]
     public interface ISupplierPurchaseOrderService
     {
         // READ
@@ -14,8 +14,8 @@ namespace SoapApi.Contracts
         [OperationContract]
         [FaultContract(typeof(PurchaseOrderNotFoundFault))]
         GetPurchaseOrderByIdResponse GetPurchaseOrderById(GetPurchaseOrderByIdRequest request);
-
-        // CHANGE
+        
+        // CHANGES
         [OperationContract]
         [FaultContract(typeof(SupplierNotFoundFault))]
         CreatePurchaseOrderResponse CreatePurchaseOrder(CreatePurchaseOrderRequest request);

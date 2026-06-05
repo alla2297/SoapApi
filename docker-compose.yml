@@ -1,0 +1,19 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ${SOAP_DB_CONTAINER_NAME}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${SOAP_DB_PASSWORD}
+      MYSQL_DATABASE: soapdb
+      MYSQL_USER: ${SOAP_USER}
+      MYSQL_PASSWORD: ${SOAP_USER_PASSWORD}
+
+
+    ports:
+      - "${SOAP_DB_PORT}:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
