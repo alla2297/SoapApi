@@ -2,10 +2,11 @@
 
 namespace SoapApi.DTO.Requests
 {
-    [DataContract]
+    
+    [DataContract(Name = "GetSupplierByIdRequest")]
     public class GetSupplierByIdRequest
     {
-        [DataMember]
+        [DataMember(Name = "SupplierId", Order = 1)]
         public int SupplierId { get; set; }
     }
 }

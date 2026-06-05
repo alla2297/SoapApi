@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoapApi.Models;
+using System.Data;
 
 namespace SoapApi.Data;
 
@@ -19,4 +20,20 @@ public class AppDbContext : DbContext
     public DbSet<Product> Products { get; set; }
 
     public DbSet<AuditLog> AuditLogs { get; set; }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // =========================
+        // Seed Supplies
+        // =========================
+        modelBuilder.Entity<Supplier>().HasData(
+            new Supplier
+            {
+                SupplierId = 1,
+                Name = "ABC Supplies",
+                Email = "abc@test.com",
+                Phone = "12345678",
+                CreatedAt = new DateTime(2026, 6, 6)
+            }
+        );
+    }
 }

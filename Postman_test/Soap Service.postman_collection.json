@@ -1,0 +1,44 @@
+{
+  "info": {
+    "_postman_id": "6413265e-5605-43e3-90ec-165f139a3136",
+    "name": "Soap Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "50755577"
+  },
+  "item": [
+    {
+      "name": "http://localhost:5298/SupplierPurchaseOrderService.asmx",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "SOAPAction",
+            "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/GetSupplierById\"",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>1</a:SupplierId>\r\n            </request>\r\n        </GetSupplierById>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
+          "options": {
+            "raw": {
+              "language": "xml"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5298/SupplierPurchaseOrderService.asmx",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5298",
+          "path": [
+            "SupplierPurchaseOrderService.asmx"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

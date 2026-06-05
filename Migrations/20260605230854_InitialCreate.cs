@@ -126,6 +126,11 @@ namespace SoapApi.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
+            migrationBuilder.InsertData(
+                table: "Suppliers",
+                columns: new[] { "SupplierId", "CreatedAt", "Email", "Name", "Phone" },
+                values: new object[] { 1, new DateTime(2026, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "abc@test.com", "ABC Supplies", "12345678" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_PurchaseOrderLines_ProductId",
                 table: "PurchaseOrderLines",

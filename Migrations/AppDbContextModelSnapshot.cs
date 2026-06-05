@@ -157,6 +157,16 @@ namespace SoapApi.Migrations
                     b.HasKey("SupplierId");
 
                     b.ToTable("Suppliers");
+
+                    b.HasData(
+                        new
+                        {
+                            SupplierId = 1,
+                            CreatedAt = new DateTime(2026, 6, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "abc@test.com",
+                            Name = "ABC Supplies",
+                            Phone = "12345678"
+                        });
                 });
 
             modelBuilder.Entity("SoapApi.Models.PurchaseOrder", b =>

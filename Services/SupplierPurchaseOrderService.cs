@@ -19,18 +19,31 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     public GetSupplierByIdResponse GetSupplierById(
     GetSupplierByIdRequest request)
     {
+        /*Console.WriteLine($"Requested ID: {request.SupplierId}");
+        Console.WriteLine($"Request null? {request == null}");
+
+        if (request != null)
+        {
+            Console.WriteLine($"Requested ID: {request.SupplierId}");
+        }*/
         var supplier = _context.Suppliers
             .FirstOrDefault(s => s.SupplierId == request.SupplierId);
-        Console.log("supplier = " & suplier);
+        //Console.WriteLine("========== SUPPLIERS ==========");
+        /*foreach (var s in _context.Suppliers.ToList())
+        {
+            Console.WriteLine(
+                $"ID={s.SupplierId}, Name={s.Name}");
+        }*/
         if (supplier == null)
         {
+            //Console.WriteLine($"supplier == null | Requested ID: {request.SupplierId}");
             throw new FaultException<SupplierNotFoundFault>(
                 new SupplierNotFoundFault
                 {
                     Message = "Supplier not found"
                 });
         }
-
+        //Console.WriteLine("==============================");
         return new GetSupplierByIdResponse
         {
             SupplierId = supplier.SupplierId,
