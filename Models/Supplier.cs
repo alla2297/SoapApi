@@ -1,7 +1,9 @@
-﻿namespace SoapApi.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace SoapApi.Models
 {
     public class Supplier
     {
+        [Key]
         public int SupplierId { get; set; }
 
         public string Name { get; set; } = string.Empty;

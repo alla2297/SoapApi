@@ -1,4 +1,8 @@
-﻿using System.Runtime.Serialization;
+﻿using SoapApi.DTO.Requests;
+using SoapApi.DTO.Responses;
+using SoapApi.Faults;
+using SoapApi.Services;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace SoapApi.Contracts

@@ -1,6 +1,10 @@
-﻿namespace SoapApi.Faults
+﻿using System.Runtime.Serialization;
+
+namespace SoapApi.Faults;
+
+[DataContract]
+public class InvalidOrderStatusFault
 {
-    public class InvalidOrderStatusFault
-    {
-    }
+    [DataMember]
+    public string Message { get; set; } = string.Empty;
 }

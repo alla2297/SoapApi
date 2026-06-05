@@ -8,6 +8,7 @@ It is built with:
 
 - ASP.NET Core 8
 - Microsoft.EntityFrameworkCore (v9.0.0)
+- Microsoft.EntityFrameworkCore.Design (v9.0.0)
 - Pomelo.EntityFrameworkCore.MySql (v9.0.0)
 - SoapCore (v1.2.1.13)
 - Docker
@@ -28,6 +29,19 @@ SoapApi
 │   ├── AppDbContext.cs
 │   └── Configurations
 │
+├── DTO
+│   ├── Requests
+│   │   ├── GetSupplierByIdRequest.cs
+│   │   ├── GetPurchaseOrderByIdRequest.cs
+│   │   ├── CreatePurchaseOrderRequest.cs
+│   │   └── UpdatePurchaseOrderStatusRequest.cs
+│   │
+│   └── Responses
+│       ├── GetSupplierByIdResponse.cs
+│       ├── GetPurchaseOrderByIdResponse.cs
+│       ├── CreatePurchaseOrderResponse.cs
+│       └── UpdatePurchaseOrderStatusResponse.cs
+|
 ├── Requests
 │   ├── GetSupplierByIdRequest.cs
 │   └── CreatePurchaseOrderRequest.cs
@@ -50,17 +64,44 @@ SoapApi
 │
 ├── Services
 │   └── SupplierPurchaseOrderService.cs
-│
+├── .env
 ├── Program.cs
 ├── appsettings.json
 ```
+
 # Running the Service
 ## Run with Docker
 
 ```bash
-docker-compose down -v
-docker-compose up --build
+
+docker compose down -v
+
+docker compose up -d
+
+dotnet ef migrations add InitialCreate
+
+dotnet ef database update
+
 ```
+Or if the migration already exists:
+```bash
+docker compose up -d
+
+dotnet ef database update
+```
+
+## Run witout Docker
+First install MySQL locally and create ```soapdb```.
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+dotnet run
+
+```
+
+## SOAP WSDL:
+[Click Here SupplierPurchaseOrderService.asmx?wsdl](https://localhost:7034/SupplierPurchaseOrderService.asmx?wsdl)
+
 
 # Database Structure
 ## Tables

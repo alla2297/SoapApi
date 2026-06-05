@@ -3,6 +3,7 @@ using SoapApi.Contracts;
 using SoapApi.Data;
 using SoapApi.Services;
 using SoapCore;
+using DotNetEnv;
 
 namespace SoapApi
 {
@@ -10,6 +11,9 @@ namespace SoapApi
     {
         public static void Main(string[] args)
         {
+            
+
+            Env.Load();
             var builder = WebApplication.CreateBuilder(args);
 
             // REST
@@ -26,13 +30,21 @@ namespace SoapApi
                 ISupplierPurchaseOrderService,
                 SupplierPurchaseOrderService>();
 
+            
+            var connectionString =
+                    $"server=localhost;" +
+                    $"port={System.Environment.GetEnvironmentVariable("SOAP_DB_PORT")};" +
+                    $"database=soapdb;" +
+                    $"user=root;" +
+                    $"password={System.Environment.GetEnvironmentVariable("SOAP_DB_PASSWORD")}";
+            Console.WriteLine(connectionString);
             builder.Services.AddDbContext<AppDbContext>(options =>
-            options.UseMySql(
-                builder.Configuration.GetConnectionString("DefaultConnection"),
-                ServerVersion.AutoDetect(
-                    builder.Configuration.GetConnectionString("DefaultConnection")
+                options.UseMySql(
+                    connectionString,
+                    ServerVersion.AutoDetect(connectionString)
+
                 )
-            ));
+            );
 
 
             var app = builder.Build();

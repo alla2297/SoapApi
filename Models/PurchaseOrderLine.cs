@@ -1,16 +1,18 @@
-﻿namespace SoapApi.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace SoapApi.Models
 {
     public class PurchaseOrderLine
     {
+        [Key]
         public int LineId { get; set; }
 
         public int PurchaseOrderId { get; set; }
 
-        public PurchaseOrder PurchaseOrder { get; set; }
+        public PurchaseOrder? PurchaseOrder { get; set; }
 
         public int ProductId { get; set; }
 
-        public Product Product { get; set; }
+        public Product? Product { get; set; }
 
         public int Quantity { get; set; }
 

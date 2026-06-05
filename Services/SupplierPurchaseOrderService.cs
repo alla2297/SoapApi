@@ -21,7 +21,7 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     {
         var supplier = _context.Suppliers
             .FirstOrDefault(s => s.SupplierId == request.SupplierId);
-
+        Console.log("supplier = " & suplier);
         if (supplier == null)
         {
             throw new FaultException<SupplierNotFoundFault>(
@@ -39,11 +39,29 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     }
 
     public GetPurchaseOrderByIdResponse GetPurchaseOrderById(
-        GetPurchaseOrderByIdRequest request)
+     GetPurchaseOrderByIdRequest request)
     {
-        throw new NotImplementedException();
-    }
+        var order = _context.PurchaseOrders
+            .FirstOrDefault(p =>
+                p.PurchaseOrderId == request.PurchaseOrderId);
 
+        if (order == null)
+        {
+            throw new FaultException<PurchaseOrderNotFoundFault>(
+                new PurchaseOrderNotFoundFault
+                {
+                    Message = "Purchase order not found"
+                });
+        }
+
+        return new GetPurchaseOrderByIdResponse
+        {
+            PurchaseOrderId = order.PurchaseOrderId,
+            SupplierId = order.SupplierId,
+            TotalAmount = order.TotalAmount,
+            Status = order.Status
+        };
+    }
     public CreatePurchaseOrderResponse CreatePurchaseOrder(
       CreatePurchaseOrderRequest request)
     {
@@ -76,10 +94,50 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
             Message = "Purchase order created successfully"
         };
     }
-    // TOODO 
+    
     public UpdatePurchaseOrderStatusResponse UpdatePurchaseOrderStatus(
-        UpdatePurchaseOrderStatusRequest request)
+    UpdatePurchaseOrderStatusRequest request)
     {
-        throw new NotImplementedException();
+        var order = _context.PurchaseOrders
+            .FirstOrDefault(p =>
+                p.PurchaseOrderId == request.PurchaseOrderId
+            );
+
+        if (order == null)
+        {
+            throw new FaultException<PurchaseOrderNotFoundFault>(
+                new PurchaseOrderNotFoundFault
+                {
+                    Message = "Purchase order not found"
+                }
+            );
+        }
+
+        var validStatuses = new[]
+        {
+            "Pending",
+            "Approved",
+            "Shipped",
+            "Cancelled"
+        };
+
+        if (!validStatuses.Contains(request.Status))
+        {
+            throw new FaultException<InvalidOrderStatusFault>(
+                new InvalidOrderStatusFault
+                {
+                    Message = "Invalid order status"
+                }
+            );
+        }
+
+        order.Status = request.Status;
+
+        _context.SaveChanges();
+
+        return new UpdatePurchaseOrderStatusResponse
+        {
+            Message = "Order status updated successfully"
+        };
     }
 }

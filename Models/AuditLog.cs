@@ -1,7 +1,9 @@
-﻿namespace SoapApi.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace SoapApi.Models
 {
     public class AuditLog
     {
+        [Key]
         public int LogId { get; set; }
 
         public string Action { get; set; } = string.Empty;

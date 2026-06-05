@@ -8,6 +8,6 @@ namespace SoapApi.DTO.Responses
         [DataMember]
         public int SupplierId { get; set; }
         [DataMember]
-        public string Name { get; set; }
+        public required string Name { get; set; }
     }
 }

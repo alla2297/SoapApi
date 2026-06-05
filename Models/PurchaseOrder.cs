@@ -1,12 +1,14 @@
-﻿namespace SoapApi.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace SoapApi.Models
 {
     public class PurchaseOrder
     {
+        [Key]
         public int PurchaseOrderId { get; set; }
 
         public int SupplierId { get; set; }
 
-        public Supplier Supplier { get; set; }
+        public Supplier? Supplier { get; set; }
 
         public string Status { get; set; } = "Pending";
 
