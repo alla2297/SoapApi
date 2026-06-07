@@ -2,12 +2,12 @@
 
 namespace SoapApi.DTO.Requests;
 
-[DataContract]
+[DataContract(Name = "CreatePurchaseOrderRequest")]
 public class CreatePurchaseOrderRequest
 {
-    [DataMember]
+    [DataMember(Name = "SupplierId", Order = 1)]
     public int SupplierId { get; set; }
 
-    [DataMember]
+    [DataMember(Name = "TotalAmount", Order = 2)]
     public decimal TotalAmount { get; set; }
 }

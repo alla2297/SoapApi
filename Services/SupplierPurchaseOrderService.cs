@@ -11,45 +11,42 @@ namespace SoapApi.Services;
 public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
 {
     private readonly AppDbContext _context;
-    public SupplierPurchaseOrderService(AppDbContext context)
+    private readonly AuditService _auditService;
+    public SupplierPurchaseOrderService(AppDbContext context, AuditService auditService)
     {
         _context = context;
+        _auditService = auditService;
     }
+
+    // --------------------------------------------------------------------------------------
+    //     GetSupplierById
+    // --------------------------------------------------------------------------------------
 
     public GetSupplierByIdResponse GetSupplierById(
     GetSupplierByIdRequest request)
     {
-        /*Console.WriteLine($"Requested ID: {request.SupplierId}");
-        Console.WriteLine($"Request null? {request == null}");
-
-        if (request != null)
-        {
-            Console.WriteLine($"Requested ID: {request.SupplierId}");
-        }*/
         var supplier = _context.Suppliers
             .FirstOrDefault(s => s.SupplierId == request.SupplierId);
-        //Console.WriteLine("========== SUPPLIERS ==========");
-        /*foreach (var s in _context.Suppliers.ToList())
-        {
-            Console.WriteLine(
-                $"ID={s.SupplierId}, Name={s.Name}");
-        }*/
+
         if (supplier == null)
         {
-            //Console.WriteLine($"supplier == null | Requested ID: {request.SupplierId}");
             throw new FaultException<SupplierNotFoundFault>(
                 new SupplierNotFoundFault
                 {
                     Message = "Supplier not found"
                 });
         }
-        //Console.WriteLine("==============================");
+        
         return new GetSupplierByIdResponse
         {
             SupplierId = supplier.SupplierId,
             Name = supplier.Name
         };
     }
+
+    // --------------------------------------------------------------------------------------
+    //     GetPurchaseOrderById
+    // --------------------------------------------------------------------------------------
 
     public GetPurchaseOrderByIdResponse GetPurchaseOrderById(
      GetPurchaseOrderByIdRequest request)
@@ -75,6 +72,11 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
             Status = order.Status
         };
     }
+
+    // --------------------------------------------------------------------------------------
+    //     CreatePurchaseOrder
+    // --------------------------------------------------------------------------------------
+
     public CreatePurchaseOrderResponse CreatePurchaseOrder(
       CreatePurchaseOrderRequest request)
     {
@@ -100,6 +102,8 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
 
         _context.PurchaseOrders.Add(order);
         _context.SaveChanges();
+        _auditService.LogCreatePurchaseOrder(order);
+
 
         return new CreatePurchaseOrderResponse
         {
@@ -107,7 +111,11 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
             Message = "Purchase order created successfully"
         };
     }
-    
+
+    // --------------------------------------------------------------------------------------
+    //     UpdatePurchaseOrderStatus
+    // --------------------------------------------------------------------------------------
+
     public UpdatePurchaseOrderStatusResponse UpdatePurchaseOrderStatus(
     UpdatePurchaseOrderStatusRequest request)
     {
@@ -125,7 +133,8 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
                 }
             );
         }
-
+        // to auditLog
+        String oldStatus = order.Status;
         var validStatuses = new[]
         {
             "Pending",
@@ -143,10 +152,14 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
                 }
             );
         }
-
+       
         order.Status = request.Status;
 
         _context.SaveChanges();
+
+        _auditService.LogUpdatePurchaseOrderStatus(
+            order, oldStatus
+        );
 
         return new UpdatePurchaseOrderStatusResponse
         {

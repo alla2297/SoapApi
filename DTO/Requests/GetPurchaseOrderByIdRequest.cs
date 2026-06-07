@@ -2,9 +2,9 @@ using System.Runtime.Serialization;
 
 namespace SoapApi.DTO.Requests;
 
-[DataContract]
+[DataContract(Name = "GetPurchaseOrderByIdRequest")]
 public class GetPurchaseOrderByIdRequest
 {
-    [DataMember]
+    [DataMember(Name = "PurchaseOrderId", Order = 1)]
     public int PurchaseOrderId { get; set; }
 }

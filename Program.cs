@@ -30,7 +30,7 @@ namespace SoapApi
                 ISupplierPurchaseOrderService,
                 SupplierPurchaseOrderService>();
 
-            
+            builder.Services.AddScoped<AuditService>();
             var connectionString =
                     $"server=localhost;" +
                     $"port={System.Environment.GetEnvironmentVariable("SOAP_DB_PORT")};" +
@@ -66,7 +66,8 @@ namespace SoapApi
                 endpoints.UseSoapEndpoint<ISupplierPurchaseOrderService>(
                     "/SupplierPurchaseOrderService.asmx",
                     new SoapEncoderOptions(),
-                    SoapSerializer.DataContractSerializer);
+                    SoapSerializer.DataContractSerializer
+                );
             });
 
             app.Run();

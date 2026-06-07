@@ -7,38 +7,254 @@
   },
   "item": [
     {
-      "name": "http://localhost:5298/SupplierPurchaseOrderService.asmx",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "SOAPAction",
-            "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/GetSupplierById\"",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>1</a:SupplierId>\r\n            </request>\r\n        </GetSupplierById>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
-          "options": {
-            "raw": {
-              "language": "xml"
+      "name": "Positive",
+      "item": [
+        {
+          "name": "GetSupplierById(1)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "SOAPAction",
+                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/GetSupplierById\"",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>1</a:SupplierId>\r\n            </request>\r\n        </GetSupplierById>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
             }
-          }
+          },
+          "response": []
         },
-        "url": {
-          "raw": "http://localhost:5298/SupplierPurchaseOrderService.asmx",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "5298",
-          "path": [
-            "SupplierPurchaseOrderService.asmx"
-          ]
+        {
+          "name": "CreatePurchaseOrder",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "SOAPAction",
+                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/CreatePurchaseOrder\"",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>1</a:SupplierId>\r\n                <a:TotalAmount>300.22</a:TotalAmount>\r\n            </request>\r\n        </CreatePurchaseOrder>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdatePurchaseOrderStatusRequest",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "SOAPAction",
+                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/CreatePurchaseOrder\"",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>1</a:PurchaseOrderId>\r\n                <a:Status>Approved</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetPurchaseOrderById(1)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "SOAPAction",
+                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/CreatePurchaseOrder\"",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>1</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
         }
-      },
-      "response": []
+      ]
+    },
+    {
+      "name": "Negative",
+      "item": [
+        {
+          "name": "SupplierNotFoundFault(GetSupplierById)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "SOAPAction",
+                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/GetSupplierById\"",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>200</a:SupplierId>\r\n            </request>\r\n        </GetSupplierById>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "SupplierNotFoundFault(CreatePurchaseOrder)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "SOAPAction",
+                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/CreatePurchaseOrder\"",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>99</a:SupplierId>\r\n                <a:TotalAmount>300.22</a:TotalAmount>\r\n            </request>\r\n        </CreatePurchaseOrder>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PurchaseOrderNotFoundFault(GetPurchaseOrderById)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "SOAPAction",
+                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/GetSupplierById\"",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>99</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "InvalidOrderStatusFault(UpdatePurchaseOrderStatus)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "SOAPAction",
+                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/GetSupplierById\"",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>1</a:SupplierId>\r\n            </request>\r\n        </GetSupplierById>\r\n    </soap:Body>\r\n</soap:Envelope><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>1</a:PurchaseOrderId>\r\n                <a:Status>dsfds</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ]
 }

@@ -23,6 +23,12 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // =========================
+        // Making TotalAmoun to two dicimal
+        // =========================
+        modelBuilder.Entity<PurchaseOrder>()
+            .Property(p => p.TotalAmount)
+            .HasPrecision(10, 2);
+        // =========================
         // Seed Supplies
         // =========================
         modelBuilder.Entity<Supplier>().HasData(
