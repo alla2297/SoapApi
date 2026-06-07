@@ -23,7 +23,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>1</a:SupplierId>\r\n            </request>\r\n        </GetSupplierById>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>1</a:SupplierId>\r\n                </request>\r\n            </GetSupplierById>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -238,7 +238,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>1</a:SupplierId>\r\n            </request>\r\n        </GetSupplierById>\r\n    </soap:Body>\r\n</soap:Envelope><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>1</a:PurchaseOrderId>\r\n                <a:Status>dsfds</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>1</a:PurchaseOrderId>\r\n                <a:Status>dsfds</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"

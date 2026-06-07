@@ -2,21 +2,22 @@
 
 #### Table of Contents
 
-- [Business Case]{# Business Case}
-- [Technologies]
-- [Features]
-- [Project Structure]
-- [Database Structure]
-- [Running the Service]
+- [Business Case](#business-case)
+- [Technologies](#technologies)
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Database Structure](#database-structure)
+- [Running the Service](#running-the-service)
     - [Environment Variables]
     - [Run with Docker]
-- [SOAP Endpoint]
+    - [Docker Compose Architecture]
+- [SOAP Endpoint](#soap-endpoint)
     - [WSDL] 
-- [SOAP Operations]
-- [Testing]
-- [Security Notes]
-- [Future Improvements]
-- [Common Issues]
+- [SOAP Operations](#soap-operations)
+- [SOAP Faults](#soap-faults)
+- [Testing](#testing)
+- [Future Improvements](#future-improvements)
+
 
 
 
@@ -71,7 +72,7 @@ External systems can use this SOAP API to:
 * CreatePurchaseOrder
 * UpdatePurchaseOrderStatus
 
-### SOAP Faults
+### Faults
 
 * SupplierNotFoundFault
 * PurchaseOrderNotFoundFault
@@ -169,13 +170,22 @@ Supplier
 Create a `.env` file:
 
 ```env
+# ----------------------
+# SOAP API
+# ----------------------
+SOAP_API_CONTAINER_NAME=soap-api
+SOAP_API_PORT=5298
+# ----------------------
+# SOAP MYSQL DB
+# ----------------------
 SOAP_DB_CONTAINER_NAME=soap-mysql
 SOAP_DB_PORT=3307
+SOAP_DB_NAME=soapdb
 
-SOAP_USER=soapuser
-SOAP_USER_PASSWORD=soap123
+SOAP_DB_USER=soapuser
+SOAP_DB_USER_PASSWORD=soap123
 
-SOAP_DB_PASSWORD=root123
+SOAP_DB_ROOT_PASSWORD=root123
 
 ```
 
@@ -202,12 +212,53 @@ dotnet run
 ```
 
 ---
+___
+
+### Docker Compose Architecture
+
+The application consists of:
+
+* SOAP API Container
+* MySQL Database Container
+
+```text
+Client
+   │
+   ▼
+SOAP API
+   │
+   ▼
+MySQL
+```
+
+Start all services:
+
+```bash
+docker compose up -d --build
+```
+
+Stop all services:
+
+```bash
+docker compose down
+```
+
+Remove containers and database volume:
+
+```bash
+docker compose down -v
+```
+
+
+___
+
 
 ### First Time Setup
 
 If no migration exists:
 
 ```bash
+docker compose up -d
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 dotnet run
@@ -237,7 +288,7 @@ http://localhost:5298/SupplierPurchaseOrderService.asmx
 ```text
 http://localhost:5298/SupplierPurchaseOrderService.asmx?wsdl
 ```
-[Click Here SupplierPurchaseOrderService.asmx?wsdl](https://localhost:7034/SupplierPurchaseOrderService.asmx?wsdl)
+
 
 [Back to top](#table-of-contents)
 
@@ -320,6 +371,7 @@ Negative
 * Improve API documentation
 * Add support for additional data models
 
+
 [Back to top](#table-of-contents)
 
 ---
@@ -332,3 +384,4 @@ Created as part of the iREDO API exam project.
 
 ___
 ---
+

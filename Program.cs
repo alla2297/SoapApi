@@ -11,9 +11,14 @@ namespace SoapApi
     {
         public static void Main(string[] args)
         {
-            
-
-            Env.Load();
+            try
+            {
+                Env.Load();
+            }
+            catch
+            {
+                // Running inside Docker
+            }
             var builder = WebApplication.CreateBuilder(args);
 
             // REST
@@ -30,13 +35,18 @@ namespace SoapApi
                 ISupplierPurchaseOrderService,
                 SupplierPurchaseOrderService>();
 
+            var host =
+                Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"
+                    ? "mysql"
+                    : "localhost";
+
             builder.Services.AddScoped<AuditService>();
             var connectionString =
-                    $"server=localhost;" +
+                    $"server={host};" +
                     $"port={System.Environment.GetEnvironmentVariable("SOAP_DB_PORT")};" +
-                    $"database=soapdb;" +
-                    $"user=root;" +
-                    $"password={System.Environment.GetEnvironmentVariable("SOAP_DB_PASSWORD")}";
+                    $"database={System.Environment.GetEnvironmentVariable("SOAP_DB_NAME")};" +
+                    $"user={System.Environment.GetEnvironmentVariable("SOAP_DB_USER")};" +
+                    $"password={System.Environment.GetEnvironmentVariable("SOAP_DB_USER_PASSWORD")}";
             Console.WriteLine(connectionString);
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseMySql(

@@ -34,7 +34,8 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
                 new SupplierNotFoundFault
                 {
                     Message = "Supplier not found"
-                });
+                },
+                new FaultReason("Supplier not found"));
         }
         
         return new GetSupplierByIdResponse
@@ -61,7 +62,8 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
                 new PurchaseOrderNotFoundFault
                 {
                     Message = "Purchase order not found"
-                });
+                },
+                new FaultReason("Purchase order not found"));
         }
 
         return new GetPurchaseOrderByIdResponse
@@ -89,7 +91,8 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
                 new SupplierNotFoundFault
                 {
                     Message = "Supplier not found"
-                });
+                },
+                new FaultReason("Supplier not found"));
         }
 
         var order = new PurchaseOrder
@@ -130,11 +133,13 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
                 new PurchaseOrderNotFoundFault
                 {
                     Message = "Purchase order not found"
-                }
+                },
+                new FaultReason("Purchase order not found")
             );
         }
         // to auditLog
-        String oldStatus = order.Status;
+
+        string oldStatus = order.Status;
         var validStatuses = new[]
         {
             "Pending",
@@ -149,7 +154,8 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
                 new InvalidOrderStatusFault
                 {
                     Message = "Invalid order status"
-                }
+                },
+                new FaultReason("Invalid order status")
             );
         }
        
