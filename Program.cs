@@ -35,15 +35,21 @@ namespace SoapApi
                 ISupplierPurchaseOrderService,
                 SupplierPurchaseOrderService>();
 
+
+            //chouse between running in .NET and DOCKER
             var host =
                 Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"
                     ? "mysql"
                     : "localhost";
+            var port =
+                Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") == "true"
+                    ? "3306"
+                    : Environment.GetEnvironmentVariable("SOAP_DB_PORT");
 
             builder.Services.AddScoped<AuditService>();
             var connectionString =
                     $"server={host};" +
-                    $"port={System.Environment.GetEnvironmentVariable("SOAP_DB_PORT")};" +
+                    $"port={port};" +
                     $"database={System.Environment.GetEnvironmentVariable("SOAP_DB_NAME")};" +
                     $"user={System.Environment.GetEnvironmentVariable("SOAP_DB_USER")};" +
                     $"password={System.Environment.GetEnvironmentVariable("SOAP_DB_USER_PASSWORD")}";
