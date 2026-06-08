@@ -11,6 +11,31 @@
       "item": [
         {
           "name": "GetSupplierById(1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"GetSupplierByIdResponse\"][\"GetSupplierByIdResult\"];\r",
+                  "\r",
+                  "pm.test(\"Supplier details are correct\", function () {\r",
+                  "    pm.expect(result[\"d4p1:Name\"]).to.eql(\"ABC Supplies\");\r",
+                  "    pm.expect(result[\"d4p1:SupplierId\"]).to.eql(\"1\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -41,6 +66,34 @@
         },
         {
           "name": "CreatePurchaseOrder",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"CreatePurchaseOrderResponse\"][\"CreatePurchaseOrderResult\"];\r",
+                  "\r",
+                  "pm.test(\"Purchase order created successfully\", function () {\r",
+                  "    pm.expect(result[\"d4p1:Message\"])\r",
+                  "        .to.eql(\"Purchase order created successfully\");\r",
+                  "\r",
+                  "    /*pm.expect(result[\"d4p1:PurchaseOrderId\"])\r",
+                  "        .to.eql(\"12\");*/\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -71,6 +124,31 @@
         },
         {
           "name": "UpdatePurchaseOrderStatusRequest",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"UpdatePurchaseOrderStatusResponse\"][\"UpdatePurchaseOrderStatusResult\"];\r",
+                  "\r",
+                  "pm.test(\"Order status updated successfully\", function () {\r",
+                  "    pm.expect(result[\"d4p1:Message\"])\r",
+                  "        .to.eql(\"Order status updated successfully\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -101,6 +179,33 @@
         },
         {
           "name": "GetPurchaseOrderById(1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"GetPurchaseOrderByIdResponse\"][\"GetPurchaseOrderByIdResult\"];\r",
+                  "\r",
+                  "pm.test(\"Purchase order details are correct\", function () {\r",
+                  "    pm.expect(result[\"d4p1:PurchaseOrderId\"]).to.eql(\"1\");\r",
+                  "    pm.expect(result[\"d4p1:Status\"]).to.eql(\"Approved\");\r",
+                  "    pm.expect(result[\"d4p1:SupplierId\"]).to.eql(\"1\");\r",
+                  "    pm.expect(result[\"d4p1:TotalAmount\"]).to.eql(\"300.22\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -136,6 +241,36 @@
       "item": [
         {
           "name": "SupplierNotFoundFault(GetSupplierById)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "const json = xml2Json(responseBody);\r",
+                  "\r",
+                  "pm.test(\"Supplier not found message\", function () {\r",
+                  "    pm.expect(\r",
+                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+                  "    ).to.eql(\"Supplier not found\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Custom fault message\", function () {\r",
+                  "    pm.expect(\r",
+                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"detail\"][\"SupplierNotFoundFault\"][\"Message\"]\r",
+                  "    ).to.eql(\"Supplier not found\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -166,6 +301,35 @@
         },
         {
           "name": "SupplierNotFoundFault(CreatePurchaseOrder)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "const json = xml2Json(responseBody);\r",
+                  "\r",
+                  "pm.test(\"Supplier not found message\", function () {\r",
+                  "    pm.expect(\r",
+                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+                  "    ).to.eql(\"Supplier not found\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Custom fault message\", function () {\r",
+                  "    pm.expect(\r",
+                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"detail\"][\"SupplierNotFoundFault\"][\"Message\"]\r",
+                  "    ).to.eql(\"Supplier not found\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -196,6 +360,35 @@
         },
         {
           "name": "PurchaseOrderNotFoundFault(GetPurchaseOrderById)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "const json = xml2Json(responseBody);\r",
+                  "\r",
+                  "pm.test(\"Supplier not found message\", function () {\r",
+                  "    pm.expect(\r",
+                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+                  "    ).to.eql(\"Purchase order not found\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Custom fault message\", function () {\r",
+                  "    pm.expect(\r",
+                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"detail\"][\"PurchaseOrderNotFoundFault\"][\"Message\"]\r",
+                  "    ).to.eql(\"Purchase order not found\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -226,6 +419,34 @@
         },
         {
           "name": "InvalidOrderStatusFault(UpdatePurchaseOrderStatus)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "const json = xml2Json(responseBody);\r",
+                  "\r",
+                  "pm.test(\"Supplier not found message\", function () {\r",
+                  "    pm.expect(\r",
+                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+                  "    ).to.eql(\"Invalid order status\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Custom fault message\", function () {\r",
+                  "    pm.expect(\r",
+                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"detail\"][\"InvalidOrderStatusFault\"][\"Message\"]\r",
+                  "    ).to.eql(\"Invalid order status\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
