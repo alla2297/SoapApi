@@ -5,6 +5,8 @@ using SoapApi.DTO.Responses;
 using SoapApi.Faults;
 using SoapApi.Models;
 using System.ServiceModel;
+using SoapApi.Security;
+
 
 namespace SoapApi.Services;
 
@@ -25,6 +27,9 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     public GetSupplierByIdResponse GetSupplierById(
     GetSupplierByIdRequest request)
     {
+        SecurityValidator.ValidateToken(
+             request.AccessToken
+         );
 
         if (request.SupplierId <= 0)
         {
@@ -63,6 +68,10 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     public GetPurchaseOrderByIdResponse GetPurchaseOrderById(
      GetPurchaseOrderByIdRequest request)
     {
+        SecurityValidator.ValidateToken(
+             request.AccessToken
+         );
+
         if (request.PurchaseOrderId <= 0)
         {
             throw new FaultException<ValidationFault>(
@@ -102,6 +111,10 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     public CreatePurchaseOrderResponse CreatePurchaseOrder(
       CreatePurchaseOrderRequest request)
     {
+        SecurityValidator.ValidateToken(
+             request.AccessToken
+         );
+
         if (request.SupplierId <= 0)
         {
             throw new FaultException<ValidationFault>(
@@ -164,7 +177,13 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     public UpdatePurchaseOrderStatusResponse UpdatePurchaseOrderStatus(
     UpdatePurchaseOrderStatusRequest request)
     {
-       
+        SecurityValidator.ValidateToken(
+             request.AccessToken
+         );
+
+        InputValidator.ValidateNoHtml(
+            request.Status
+        );
 
         if (string.IsNullOrWhiteSpace(request.Status))
         {

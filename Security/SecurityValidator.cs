@@ -1,31 +1,41 @@
-﻿using System.ServiceModel;
+﻿using DotNetEnv;
 using SoapApi.Faults;
+using System.ServiceModel;
 
 namespace SoapApi.Security;
 
 public static class SecurityValidator
 {
-    private const string ApiKey = "WAREHOUSE-SECRET-KEY";
-
-    public static void ValidateApiKey(string? apiKey)
+    public static void ValidateToken(string? token)
     {
-        if (string.IsNullOrWhiteSpace(apiKey))
+        Env.Load();
+        var expectedToken =
+            Environment.GetEnvironmentVariable(
+                "SOAP_API_KEY");
+
+        //Console.WriteLine("TOKEN:");
+        //Console.WriteLine(token);
+
+        //Console.WriteLine("EXPECTED:");
+        //Console.WriteLine(expectedToken);
+
+        if (string.IsNullOrWhiteSpace(token))
         {
             throw new FaultException<AuthenticationFault>(
                 new AuthenticationFault
                 {
-                    Message = "API Key is required"
+                    Message = "Access token is required"
                 },
                 new FaultReason("Authentication failed")
             );
         }
 
-        if (apiKey != ApiKey)
+        if (token != expectedToken)
         {
             throw new FaultException<AuthenticationFault>(
                 new AuthenticationFault
                 {
-                    Message = "Invalid API Key"
+                    Message = "Invalid access token"
                 },
                 new FaultReason("Authentication failed")
             );

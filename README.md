@@ -124,6 +124,7 @@ SoapApi
 │   └── AuditLog.cs
 │
 ├── Faults
+│   ├── AuthenticationFault.cs
 │   ├── ConflictFault.cs
 │   ├── NotFoundFault.cs
 │   └── ValidationFault.cs
@@ -182,6 +183,7 @@ Create a `.env` file:
 # ----------------------
 SOAP_API_CONTAINER_NAME=soap-api
 SOAP_API_PORT=5298
+SOAP_API_KEY=ey.......
 # ----------------------
 # SOAP MYSQL DB
 # ----------------------
@@ -405,6 +407,19 @@ Negative
 
 ---
 ## Security Considerations
+
+### Authentication
+
+The service validates an API Key for all SOAP operations.
+
+This simulates communication between trusted backend systems such as:
+
+- API Gateway
+- Warehouse Service
+- ERP Service
+- Invoice Service
+
+Unauthorized requests return AuthenticationFault.
 
 ### SQL Injection
 

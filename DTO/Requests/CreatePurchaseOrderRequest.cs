@@ -5,6 +5,9 @@ namespace SoapApi.DTO.Requests;
 [DataContract(Name = "CreatePurchaseOrderRequest")]
 public class CreatePurchaseOrderRequest
 {
+    [DataMember(Name = "AccessToken", Order = 0)]
+    public string AccessToken { get; set; } = string.Empty;
+
     [DataMember(Name = "SupplierId", Order = 1)]
     public int SupplierId { get; set; }
 
