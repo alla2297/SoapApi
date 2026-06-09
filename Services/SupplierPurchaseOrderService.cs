@@ -14,10 +14,12 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
 {
     private readonly AppDbContext _context;
     private readonly AuditService _auditService;
-    public SupplierPurchaseOrderService(AppDbContext context, AuditService auditService)
+    private readonly IHttpContextAccessor _httpContextAccessor;
+    public SupplierPurchaseOrderService(AppDbContext context, AuditService auditService, IHttpContextAccessor httpContextAccessor)
     {
         _context = context;
         _auditService = auditService;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     // --------------------------------------------------------------------------------------
@@ -28,8 +30,8 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     GetSupplierByIdRequest request)
     {
         SecurityValidator.ValidateToken(
-             request.AccessToken
-         );
+            GetBearerToken()
+        );
 
         if (request.SupplierId <= 0)
         {
@@ -69,8 +71,8 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
      GetPurchaseOrderByIdRequest request)
     {
         SecurityValidator.ValidateToken(
-             request.AccessToken
-         );
+            GetBearerToken()
+        );
 
         if (request.PurchaseOrderId <= 0)
         {
@@ -112,7 +114,7 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
       CreatePurchaseOrderRequest request)
     {
         SecurityValidator.ValidateToken(
-             request.AccessToken
+             GetBearerToken()
          );
 
         if (request.SupplierId <= 0)
@@ -178,8 +180,8 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     UpdatePurchaseOrderStatusRequest request)
     {
         SecurityValidator.ValidateToken(
-             request.AccessToken
-         );
+            GetBearerToken()
+        );
 
         InputValidator.ValidateNoHtml(
             request.Status
@@ -268,4 +270,25 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
             Message = "Order status updated successfully"
         };
     }
+
+    // --------------------------------------------------------------------------------------
+    //     Create helper method
+    // --------------------------------------------------------------------------------------
+
+    private string? GetBearerToken()
+    {
+        var authHeader =
+            _httpContextAccessor.HttpContext?
+            .Request.Headers["Authorization"]
+            .FirstOrDefault();
+
+        if (string.IsNullOrWhiteSpace(authHeader))
+            return null;
+
+        if (!authHeader.StartsWith("Bearer "))
+            return null;
+
+        return authHeader["Bearer ".Length..];
+    }
+
 }

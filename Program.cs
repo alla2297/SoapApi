@@ -30,7 +30,7 @@ namespace SoapApi
 
             // SOAP
             builder.Services.AddSoapCore();
-
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<
                 ISupplierPurchaseOrderService,
                 SupplierPurchaseOrderService>();
