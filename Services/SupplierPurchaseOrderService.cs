@@ -288,7 +288,7 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
         if (!authHeader.StartsWith("Bearer "))
             return null;
 
-        return authHeader["Bearer ".Length..];
+        return authHeader.Substring("Bearer ".Length).Trim();
     }
 
 }

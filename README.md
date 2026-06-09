@@ -415,7 +415,7 @@ Negative
 
 ### Authentication
 
-The service validates an access token for all SOAP operations.
+The service validates a Bearer token supplied through the HTTP Authorization header.
 
 This simulates communication between trusted backend systems such as:
 
