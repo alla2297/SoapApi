@@ -1,9 +1,10 @@
 {
   "info": {
-    "_postman_id": "6413265e-5605-43e3-90ec-165f139a3136",
+    "_postman_id": "cd6ca8d6-92ad-48a3-822e-d1ca2024d296",
     "name": "Soap Service",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "50755577"
+    "_exporter_id": "50755500",
+    "_collection_link": "https://go.postman.co/collection/50755500-cd6ca8d6-92ad-48a3-822e-d1ca2024d296?source=collection_link"
   },
   "item": [
     {
@@ -67,7 +68,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>1</a:SupplierId>\r\n                </request>\r\n            </GetSupplierById>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                    <a:SupplierId>1</a:SupplierId>\r\n                </request>\r\n            </GetSupplierById>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -160,7 +161,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>1</a:SupplierId>\r\n                <a:TotalAmount>300.22</a:TotalAmount>\r\n            </request>\r\n        </CreatePurchaseOrder>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                <a:SupplierId>1</a:SupplierId>\r\n                <a:TotalAmount>300.22</a:TotalAmount>\r\n            </request>\r\n        </CreatePurchaseOrder>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -255,7 +256,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -337,7 +338,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n                <a:Status>{{PurchaseStatus}}</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n                <a:Status>{{PurchaseStatus}}</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -436,7 +437,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -457,6 +458,64 @@
     {
       "name": "Negative",
       "item": [
+        {
+          "name": "GetSupplierById - AuthenticationFault",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation fault returned\", function () {\r",
+                  "    pm.expect(result).to.exist;\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "    \r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"AuthenticationFault returned\", function () {\r",
+                  "    pm.expect(result[\"detail\"][\"AuthenticationFault\"][\"Message\"])\r",
+                  "    .to.eql(\"Invalid access token\");\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "    .to.eql(\"Authentication failed\");\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:AccessToken>INVALID-TOKEN</a:AccessToken>\r\n                <a:SupplierId>1</a:SupplierId>\r\n            </request>\r\n        </GetSupplierById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
         {
           "name": "GetSupplierById - Not Found",
           "event": [
@@ -498,7 +557,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>99999</a:SupplierId>\r\n                </request>\r\n            </GetSupplierById>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                    <a:SupplierId>99999</a:SupplierId>\r\n                </request>\r\n            </GetSupplierById>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -557,7 +616,63 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>-1</a:SupplierId>\r\n                </request>\r\n            </GetSupplierById>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                    <a:SupplierId>-1</a:SupplierId>\r\n                </request>\r\n            </GetSupplierById>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetPurchaseOrderById - AuthenticationFault",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation fault returned\", function () {\r",
+                  "    pm.expect(result).to.exist;\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "    \r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"AuthenticationFault returned\", function () {\r",
+                  "    pm.expect(result[\"detail\"][\"AuthenticationFault\"][\"Message\"])\r",
+                  "    .to.eql(\"Invalid access token\");\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "    .to.eql(\"Authentication failed\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:AccessToken>INVALID-TOKEN</a:AccessToken>\r\n                <a:PurchaseOrderId>99999</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -616,7 +731,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>99999</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                <a:PurchaseOrderId>99999</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -675,7 +790,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>-1</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                <a:PurchaseOrderId>-1</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -737,7 +852,63 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>99999</a:SupplierId>\r\n                    <a:TotalAmount>300.22</a:TotalAmount>\r\n                </request>\r\n            </CreatePurchaseOrder>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                    <a:SupplierId>99999</a:SupplierId>\r\n                    <a:TotalAmount>300.22</a:TotalAmount>\r\n                </request>\r\n            </CreatePurchaseOrder>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CreatePurchaseOrder - AuthenticationFault",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation fault returned\", function () {\r",
+                  "    pm.expect(result).to.exist;\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "    \r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"AuthenticationFault returned\", function () {\r",
+                  "    pm.expect(result[\"detail\"][\"AuthenticationFault\"][\"Message\"])\r",
+                  "    .to.eql(\"Invalid access token\");\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "    .to.eql(\"Authentication failed\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:AccessToken>INVALID-TOKEN</a:AccessToken>\r\n                    <a:SupplierId>1</a:SupplierId>\r\n                    <a:TotalAmount>1000</a:TotalAmount>\r\n                </request>\r\n            </CreatePurchaseOrder>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -800,7 +971,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>1</a:SupplierId>\r\n                    <a:TotalAmount>-100</a:TotalAmount>\r\n                </request>\r\n            </CreatePurchaseOrder>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                    <a:SupplierId>1</a:SupplierId>\r\n                    <a:TotalAmount>-100</a:TotalAmount>\r\n                </request>\r\n            </CreatePurchaseOrder>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -863,7 +1034,63 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>-1</a:SupplierId>\r\n                    <a:TotalAmount>300.22</a:TotalAmount>\r\n                </request>\r\n            </CreatePurchaseOrder>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                    <a:SupplierId>-1</a:SupplierId>\r\n                    <a:TotalAmount>300.22</a:TotalAmount>\r\n                </request>\r\n            </CreatePurchaseOrder>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CreatePurchaseOrder - AuthenticationFault Copy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation fault returned\", function () {\r",
+                  "    pm.expect(result).to.exist;\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "    \r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"AuthenticationFault returned\", function () {\r",
+                  "    pm.expect(result[\"detail\"][\"AuthenticationFault\"][\"Message\"])\r",
+                  "    .to.eql(\"Invalid access token\");\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "    .to.eql(\"Authentication failed\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <UpdatePurchaseOrderStatus  xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:AccessToken>INVALID-TOKEN</a:AccessToken>\r\n                    <a:PurchaseOrderId>1</a:PurchaseOrderId>\r\n                    <a:Status>Approved</a:Status>\r\n                </request>\r\n            </UpdatePurchaseOrderStatus >\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -903,15 +1130,12 @@
                   "\r",
                   "pm.test(\"Invalid status validation fault\", function () {\r",
                   "\r",
-                  "    const detail = result[\"detail\"];\r",
-                  "    const faultType = Object.keys(detail)[0];\r",
-                  "\r",
                   "    pm.expect(result[\"faultstring\"])\r",
-                  "        .to.eql(\"Invalid status\")\r",
+                  "        .to.eql(\"Validation error\")\r",
                   "    ;\r",
                   "\r",
                   "    pm.expect(\r",
-                  "        detail[faultType][\"Message\"]\r",
+                  "        result[\"detail\"][Object.keys(result[\"detail\"])[0]][\"Message\"]\r",
                   "    ).to.eql(\"Invalid order status\");\r",
                   "});\r",
                   ""
@@ -927,7 +1151,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <UpdatePurchaseOrderStatus  xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n                    <a:Status>{{UpdatePurchaseOrderStatus}}</a:Status>\r\n                </request>\r\n            </UpdatePurchaseOrderStatus >\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <UpdatePurchaseOrderStatus  xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                    <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n                    <a:Status>{{UpdatePurchaseOrderStatus}}</a:Status>\r\n                </request>\r\n            </UpdatePurchaseOrderStatus >\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -988,7 +1212,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n                <a:Status>{{PurchaseStatus}}</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n                <a:Status>{{PurchaseStatus}}</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -1048,7 +1272,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <UpdatePurchaseOrderStatus  xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:PurchaseOrderId>233</a:PurchaseOrderId>\r\n                    <a:Status>{{UpdatePurchaseOrderStatus}}</a:Status>\r\n                </request>\r\n            </UpdatePurchaseOrderStatus >\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <UpdatePurchaseOrderStatus  xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:AccessToken>{{access_token}}</a:AccessToken>\r\n                    <a:PurchaseOrderId>233</a:PurchaseOrderId>\r\n                    <a:Status>{{UpdatePurchaseOrderStatus}}</a:Status>\r\n                </request>\r\n            </UpdatePurchaseOrderStatus >\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"

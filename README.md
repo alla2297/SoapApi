@@ -77,6 +77,7 @@ External systems can use this SOAP API to:
 
 ### Faults
 
+* AuthenticationFault
 * NotFoundFault
 * ConflictFault
 * ValidationFault
@@ -349,6 +350,9 @@ Updates the status of an existing purchase order.
 
 ## SOAP Faults
 
+### AuthenticationFault
+Returned when a request contains an invalid or missing access token.
+
 ### ConflictFault
 
 Returned when a requested operation would result in an invalid business state.
@@ -383,6 +387,7 @@ Positive:
 * UpdatePurchaseOrderStatus
 
 Negative 
+* AuthenticationFault test
 * ConflictFault test
 * NotFoundFault test
 * ValidationFault test
@@ -410,7 +415,7 @@ Negative
 
 ### Authentication
 
-The service validates an API Key for all SOAP operations.
+The service validates an access token for all SOAP operations.
 
 This simulates communication between trusted backend systems such as:
 
