@@ -12,21 +12,29 @@ namespace SoapApi.Contracts
     {
         // READ
         [OperationContract]
-        [FaultContract(typeof(SupplierNotFoundFault))]
+        [FaultContract(typeof(AuthenticationFault))]
+        [FaultContract(typeof(NotFoundFault))]
+        [FaultContract(typeof(ValidationFault))]
         GetSupplierByIdResponse GetSupplierById(GetSupplierByIdRequest request);
 
         [OperationContract]
-        [FaultContract(typeof(PurchaseOrderNotFoundFault))]
+        [FaultContract(typeof(AuthenticationFault))]
+        [FaultContract(typeof(NotFoundFault))]
+        [FaultContract(typeof(ValidationFault))]
         GetPurchaseOrderByIdResponse GetPurchaseOrderById(GetPurchaseOrderByIdRequest request);
         
         // CHANGES
         [OperationContract]
-        [FaultContract(typeof(SupplierNotFoundFault))]
+        [FaultContract(typeof(AuthenticationFault))]
+        [FaultContract(typeof(NotFoundFault))]
+        [FaultContract(typeof(ValidationFault))]
         CreatePurchaseOrderResponse CreatePurchaseOrder(CreatePurchaseOrderRequest request);
 
         [OperationContract]
-        [FaultContract(typeof(PurchaseOrderNotFoundFault))]
-        [FaultContract(typeof(InvalidOrderStatusFault))]
+        [FaultContract(typeof(AuthenticationFault))]
+        [FaultContract(typeof(NotFoundFault))]
+        [FaultContract(typeof(ValidationFault))]
+        [FaultContract(typeof(ConflictFault))]
         UpdatePurchaseOrderStatusResponse UpdatePurchaseOrderStatus(UpdatePurchaseOrderStatusRequest request);
     }
 }

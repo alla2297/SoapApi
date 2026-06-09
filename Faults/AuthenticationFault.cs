@@ -3,8 +3,8 @@
 namespace SoapApi.Faults;
 
 [DataContract]
-public class InvalidOrderStatusFault
+public class AuthenticationFault
 {
     [DataMember]
-    public string Message { get; set; } = string.Empty;
+    public string Message { get; set; } = "Authentication failed";
 }

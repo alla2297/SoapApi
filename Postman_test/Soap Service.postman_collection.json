@@ -23,12 +23,31 @@
                   "const json = xml2Json(pm.response.text());\r",
                   "\r",
                   "const result =\r",
-                  "    json[\"s:Envelope\"][\"s:Body\"][\"GetSupplierByIdResponse\"][\"GetSupplierByIdResult\"];\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"GetSupplierByIdResponse\"][\"GetSupplierByIdResult\"]\r",
+                  ";\r",
                   "\r",
                   "pm.test(\"Supplier details are correct\", function () {\r",
                   "    pm.expect(result[\"d4p1:Name\"]).to.eql(\"ABC Supplies\");\r",
                   "    pm.expect(result[\"d4p1:SupplierId\"]).to.eql(\"1\");\r",
-                  "});"
+                  "});\r",
+                  "pm.test(\"Response contains required fields\", function () {\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:Name\");\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:SupplierId\");\r",
+                  "\r",
+                  "    pm.expect(result[\"d4p1:Name\"]).to.be.a(\"string\");\r",
+                  "    pm.expect(result[\"d4p1:Name\"]).to.exist;\r",
+                  "    pm.expect(result[\"d4p1:Name\"]).to.not.be.empty;\r",
+                  "    pm.expect(Number(result[\"d4p1:SupplierId\"])).to.be.a(\"number\");\r",
+                  "    pm.expect(result[\"d4p1:SupplierId\"]).to.exist;\r",
+                  "    pm.expect(result[\"d4p1:SupplierId\"]).to.not.be.empty;\r",
+                  "});\r",
+                  "\r",
+                  "//is weaker because it only checks that those strings appear somewhere in the response.\r",
+                  "/*pm.test(\"Response contains Name and SupplierId tags\", function () {\r",
+                  "    const body = pm.response.text();\r",
+                  "    pm.expect(body).to.include(\"Name\");\r",
+                  "    pm.expect(body).to.include(\"SupplierId\");\r",
+                  "});*/"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -78,15 +97,50 @@
                   "const json = xml2Json(pm.response.text());\r",
                   "\r",
                   "const result =\r",
-                  "    json[\"s:Envelope\"][\"s:Body\"][\"CreatePurchaseOrderResponse\"][\"CreatePurchaseOrderResult\"];\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"CreatePurchaseOrderResponse\"][\"CreatePurchaseOrderResult\"]\r",
+                  ";\r",
+                  "\r",
+                  "pm.test(\"Response contains valid Message and PurchaseOrderId\", function () {\r",
+                  "    pm.expect(Number(result[\"d4p1:PurchaseOrderId\"])).to.be.a(\"number\");\r",
+                  "    pm.expect(result[\"d4p1:Message\"]).to.exist;\r",
+                  "    pm.expect(result[\"d4p1:Message\"]).to.not.be.empty;\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:Message\");\r",
+                  "\r",
+                  "    pm.expect(result[\"d4p1:Message\"]).to.be.a(\"string\");\r",
+                  "    pm.expect(result[\"d4p1:PurchaseOrderId\"]).to.exist;\r",
+                  "    pm.expect(result[\"d4p1:PurchaseOrderId\"]).to.not.be.empty;\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:PurchaseOrderId\");\r",
+                  "});\r",
                   "\r",
                   "pm.test(\"Purchase order created successfully\", function () {\r",
                   "    pm.expect(result[\"d4p1:Message\"])\r",
                   "        .to.eql(\"Purchase order created successfully\");\r",
                   "\r",
+                  "\r",
                   "    /*pm.expect(result[\"d4p1:PurchaseOrderId\"])\r",
                   "        .to.eql(\"12\");*/\r",
-                  "});"
+                  "});\r",
+                  "// varible other test\r",
+                  "const purchaseOrderId =\r",
+                  "    result[\"d4p1:PurchaseOrderId\"]\r",
+                  ";\r",
+                  "pm.environment.set(\"purchaseOrderId\", purchaseOrderId);\r",
+                  "pm.environment.set(\"PurchaseStatus\", \"Pending\");\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -123,25 +177,65 @@
           "response": []
         },
         {
-          "name": "UpdatePurchaseOrderStatusRequest",
+          "name": "Pre - Status - GetPurchaseOrderById",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
-                  "pm.test(\"Status code is 200\", function () {\r",
-                  "    pm.response.to.have.status(200);\r",
-                  "});\r",
-                  "\r",
                   "const json = xml2Json(pm.response.text());\r",
                   "\r",
                   "const result =\r",
-                  "    json[\"s:Envelope\"][\"s:Body\"][\"UpdatePurchaseOrderStatusResponse\"][\"UpdatePurchaseOrderStatusResult\"];\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"GetPurchaseOrderByIdResponse\"][\"GetPurchaseOrderByIdResult\"]\r",
+                  ";\r",
                   "\r",
-                  "pm.test(\"Order status updated successfully\", function () {\r",
-                  "    pm.expect(result[\"d4p1:Message\"])\r",
-                  "        .to.eql(\"Order status updated successfully\");\r",
-                  "});"
+                  "\r",
+                  "pm.test(\"Response contains required fields\", function () {\r",
+                  "\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:PurchaseOrderId\");\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:Status\");\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:SupplierId\");\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:TotalAmount\");\r",
+                  "\r",
+                  "    pm.expect(Number.isInteger(Number(result[\"d4p1:PurchaseOrderId\"]))).to.be.true;\r",
+                  "    pm.expect(Number(result[\"d4p1:PurchaseOrderId\"])).to.be.greaterThan(0);\r",
+                  "\r",
+                  "    pm.expect(result[\"d4p1:Status\"]).to.be.a(\"string\");\r",
+                  "    pm.expect(result[\"d4p1:Status\"]).to.not.be.empty;\r",
+                  "\r",
+                  "    pm.expect(Number.isInteger(Number(result[\"d4p1:SupplierId\"]))).to.be.true;\r",
+                  "    pm.expect(Number(result[\"d4p1:SupplierId\"])).to.be.greaterThan(0);\r",
+                  "\r",
+                  "    pm.expect(Number(result[\"d4p1:TotalAmount\"])).to.be.greaterThan(0);\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Purchase order details are correct\", function () {\r",
+                  "    pm.expect(result[\"d4p1:PurchaseOrderId\"])\r",
+                  "        .to.eql(pm.environment.get(\"purchaseOrderId\"))\r",
+                  "    ;\r",
+                  "    /*\r",
+                  "        PurchaseStatus:\"Pending\",\"Approved\",\"Shipped\",\"Cancelled\"\r",
+                  "    */\r",
+                  "    pm.expect(result[\"d4p1:Status\"])\r",
+                  "        .to.eql(pm.environment.get(\"PurchaseStatus\"))\r",
+                  "    ;\r",
+                  "    pm.expect(result[\"d4p1:SupplierId\"]).to.eql(\"1\");\r",
+                  "    pm.expect(result[\"d4p1:TotalAmount\"]).to.eql(\"300.22\");\r",
+                  "});\r",
+                  "pm.environment.set(\"PurchaseStatus\", \"Approved\");\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -161,7 +255,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>1</a:PurchaseOrderId>\r\n                <a:Status>Approved</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -178,7 +272,7 @@
           "response": []
         },
         {
-          "name": "GetPurchaseOrderById(1)",
+          "name": "UpdatePurchaseOrderStatusRequest",
           "event": [
             {
               "listen": "test",
@@ -191,14 +285,39 @@
                   "const json = xml2Json(pm.response.text());\r",
                   "\r",
                   "const result =\r",
-                  "    json[\"s:Envelope\"][\"s:Body\"][\"GetPurchaseOrderByIdResponse\"][\"GetPurchaseOrderByIdResult\"];\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"UpdatePurchaseOrderStatusResponse\"][\"UpdatePurchaseOrderStatusResult\"];\r",
                   "\r",
-                  "pm.test(\"Purchase order details are correct\", function () {\r",
-                  "    pm.expect(result[\"d4p1:PurchaseOrderId\"]).to.eql(\"1\");\r",
-                  "    pm.expect(result[\"d4p1:Status\"]).to.eql(\"Approved\");\r",
-                  "    pm.expect(result[\"d4p1:SupplierId\"]).to.eql(\"1\");\r",
-                  "    pm.expect(result[\"d4p1:TotalAmount\"]).to.eql(\"300.22\");\r",
-                  "});"
+                  "pm.test(\"Response contains valid Message\", function () {\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:Message\");\r",
+                  "\r",
+                  "    pm.expect(result[\"d4p1:Message\"]).to.be.a(\"string\");\r",
+                  "    pm.expect(result[\"d4p1:Message\"]).to.not.be.empty;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Order status updated successfully\", function () {\r",
+                  "    pm.expect(result[\"d4p1:Message\"])\r",
+                  "        .to.eql(\"Order status updated successfully\");\r",
+                  "});\r",
+                  "\r",
+                  "/*\r",
+                  "    PurchaseStatus:\"Pending\",\"Approved\",\"Shipped\",\"Cancelled\"\r",
+                  "*/\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "//const requestBody = pm.request.body.raw;\r",
+                  "/*\r",
+                  "    PurchaseStatus:\"Pending\",\"Approved\",\"Shipped\",\"Cancelled\"\r",
+                  "*/\r",
+                  "//pm.environment.set(\"requestBody\", PurchaseStatus);"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -218,7 +337,106 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>1</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n                <a:Status>{{PurchaseStatus}}</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GetPurchaseOrderById",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"GetPurchaseOrderByIdResponse\"][\"GetPurchaseOrderByIdResult\"]\r",
+                  ";\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Response contains required fields\", function () {\r",
+                  "\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:PurchaseOrderId\");\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:Status\");\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:SupplierId\");\r",
+                  "    pm.expect(result).to.have.property(\"d4p1:TotalAmount\");\r",
+                  "\r",
+                  "    pm.expect(Number.isInteger(Number(result[\"d4p1:PurchaseOrderId\"]))).to.be.true;\r",
+                  "    pm.expect(Number(result[\"d4p1:PurchaseOrderId\"])).to.be.greaterThan(0);\r",
+                  "\r",
+                  "    pm.expect(result[\"d4p1:Status\"]).to.be.a(\"string\");\r",
+                  "    pm.expect(result[\"d4p1:Status\"]).to.not.be.empty;\r",
+                  "\r",
+                  "    pm.expect(Number.isInteger(Number(result[\"d4p1:SupplierId\"]))).to.be.true;\r",
+                  "    pm.expect(Number(result[\"d4p1:SupplierId\"])).to.be.greaterThan(0);\r",
+                  "\r",
+                  "    pm.expect(Number(result[\"d4p1:TotalAmount\"])).to.be.greaterThan(0);\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Purchase order details are correct\", function () {\r",
+                  "    pm.expect(result[\"d4p1:PurchaseOrderId\"])\r",
+                  "        .to.eql(pm.environment.get(\"purchaseOrderId\"))\r",
+                  "    ;\r",
+                  "    /*\r",
+                  "        PurchaseStatus:\"Pending\",\"Approved\",\"Shipped\",\"Cancelled\"\r",
+                  "    */\r",
+                  "    pm.expect(result[\"d4p1:Status\"])\r",
+                  "        .to.eql(pm.environment.get(\"PurchaseStatus\"))\r",
+                  "    ;\r",
+                  "    pm.expect(result[\"d4p1:SupplierId\"]).to.eql(\"1\");\r",
+                  "    pm.expect(result[\"d4p1:TotalAmount\"]).to.eql(\"300.22\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Purchase order details are correct\", function () {\r",
+                  "    pm.expect(result[\"d4p1:Status\"])\r",
+                  "        .to.eql(pm.environment.get(\"PurchaseStatus\"))\r",
+                  "    ;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "SOAPAction",
+                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/CreatePurchaseOrder\"",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -240,7 +458,7 @@
       "name": "Negative",
       "item": [
         {
-          "name": "SupplierNotFoundFault(GetSupplierById)",
+          "name": "GetSupplierById - Not Found",
           "event": [
             {
               "listen": "test",
@@ -250,20 +468,24 @@
                   "    pm.response.to.have.status(500);\r",
                   "});\r",
                   "\r",
+                  "const json = xml2Json(pm.response.text());\r",
+                  "const result =\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"]\r",
+                  ";\r",
+                  "pm.test(\"Supplier not found fault\", function () {\r",
                   "\r",
-                  "const json = xml2Json(responseBody);\r",
-                  "\r",
-                  "pm.test(\"Supplier not found message\", function () {\r",
-                  "    pm.expect(\r",
-                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+                  "    pm.expect(result[\"faultstring\"]\r",
                   "    ).to.eql(\"Supplier not found\");\r",
+                  "\r",
+                  "    pm.expect(result[\"detail\"][\"NotFoundFault\"][\"Message\"])\r",
+                  "    .to.eql(\"Supplier not found\"); \r",
+                  "    \r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Custom fault message\", function () {\r",
-                  "    pm.expect(\r",
-                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"detail\"][\"SupplierNotFoundFault\"][\"Message\"]\r",
-                  "    ).to.eql(\"Supplier not found\");\r",
-                  "});"
+                  "pm.test(\"NotFound fault returned\", function () {\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "});\r",
+                  ""
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -273,17 +495,10 @@
           ],
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "SOAPAction",
-                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/GetSupplierById\"",
-                "type": "text",
-                "disabled": true
-              }
-            ],
+            "header": [],
             "body": {
               "mode": "raw",
-              "raw": "<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>200</a:SupplierId>\r\n            </request>\r\n        </GetSupplierById>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>99999</a:SupplierId>\r\n                </request>\r\n            </GetSupplierById>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -300,28 +515,35 @@
           "response": []
         },
         {
-          "name": "SupplierNotFoundFault(CreatePurchaseOrder)",
+          "name": "GetSupplierById - Validation",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
                   "pm.test(\"Status code is 500\", function () {\r",
                   "    pm.response.to.have.status(500);\r",
                   "});\r",
                   "\r",
-                  "const json = xml2Json(responseBody);\r",
-                  "\r",
-                  "pm.test(\"Supplier not found message\", function () {\r",
-                  "    pm.expect(\r",
-                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
-                  "    ).to.eql(\"Supplier not found\");\r",
+                  "pm.test(\"Validation fault returned\", function () {\r",
+                  "    pm.expect(result).to.exist;\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "    \r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Custom fault message\", function () {\r",
-                  "    pm.expect(\r",
-                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"detail\"][\"SupplierNotFoundFault\"][\"Message\"]\r",
-                  "    ).to.eql(\"Supplier not found\");\r",
+                  "pm.test(\"Validation fault Message\", function () {\r",
+                  "    pm.expect(result[\"detail\"][\"ValidationFault\"][\"Message\"])\r",
+                  "    .to.eql(\"Invalid supplier Id\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation fault faultstring\", function () {\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "    .to.eql(\"Validation error\");\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -332,17 +554,10 @@
           ],
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "SOAPAction",
-                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/CreatePurchaseOrder\"",
-                "type": "text",
-                "disabled": true
-              }
-            ],
+            "header": [],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:SupplierId>99</a:SupplierId>\r\n                <a:TotalAmount>300.22</a:TotalAmount>\r\n            </request>\r\n        </CreatePurchaseOrder>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <GetSupplierById xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>-1</a:SupplierId>\r\n                </request>\r\n            </GetSupplierById>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -359,28 +574,35 @@
           "response": []
         },
         {
-          "name": "PurchaseOrderNotFoundFault(GetPurchaseOrderById)",
+          "name": "GetPurchaseOrderById - Not Found",
           "event": [
             {
               "listen": "test",
               "script": {
                 "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"]\r",
+                  ";\r",
+                  "\r",
                   "pm.test(\"Status code is 500\", function () {\r",
                   "    pm.response.to.have.status(500);\r",
                   "});\r",
                   "\r",
-                  "const json = xml2Json(responseBody);\r",
                   "\r",
-                  "pm.test(\"Supplier not found message\", function () {\r",
+                  "pm.test(\"NotFound fault returned\", function () {\r",
+                  "\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "        .to.eql(\"Purchase order not found\");\r",
+                  "\r",
+                  "\r",
+                  "    pm.expect(Object.keys(result[\"detail\"])[0])\r",
+                  "        .to.eql(\"NotFoundFault\");\r",
+                  "\r",
                   "    pm.expect(\r",
-                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+                  "        result[\"detail\"][Object.keys(result[\"detail\"])[0]][\"Message\"]\r",
                   "    ).to.eql(\"Purchase order not found\");\r",
-                  "});\r",
-                  "\r",
-                  "pm.test(\"Custom fault message\", function () {\r",
-                  "    pm.expect(\r",
-                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"detail\"][\"PurchaseOrderNotFoundFault\"][\"Message\"]\r",
-                  "    ).to.eql(\"Purchase order not found\");\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -391,17 +613,10 @@
           ],
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "SOAPAction",
-                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/GetSupplierById\"",
-                "type": "text",
-                "disabled": true
-              }
-            ],
+            "header": [],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>99</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>99999</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -418,7 +633,191 @@
           "response": []
         },
         {
-          "name": "InvalidOrderStatusFault(UpdatePurchaseOrderStatus)",
+          "name": "GetPurchaseOrderById - Validation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "\r",
+                  "\r",
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation fault returned\", function () {\r",
+                  "\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "        .to.eql(\"Validation error\")\r",
+                  "    ;\r",
+                  "\r",
+                  "    pm.expect(Object.keys(result[\"detail\"])[0])\r",
+                  "        .to.eql(\"ValidationFault\");\r",
+                  "\r",
+                  "    pm.expect(\r",
+                  "        result[\"detail\"][\"ValidationFault\"][\"Message\"]\r",
+                  "    ).to.eql(\"Invalid purchase order Id\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <GetPurchaseOrderById xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>-1</a:PurchaseOrderId>\r\n            </request>\r\n        </GetPurchaseOrderById>\r\n    </soap:Body>\r\n\r\n</soap:Envelope>",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CreatePurchaseOrder - Supplier Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"CreatePurchaseOrder returns fault\", function () {\r",
+                  "    pm.expect(\r",
+                  "        result\r",
+                  "    ).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Supplier not found fault\", function () {\r",
+                  "\r",
+                  "    const detail = result [\"detail\"];\r",
+                  "    const faultType = Object.keys(detail)[0];\r",
+                  "\r",
+                  "    pm.expect(result [\"faultstring\"])\r",
+                  "        .to.eql(\"Supplier not found\");\r",
+                  "\r",
+                  "    pm.expect(\r",
+                  "        detail[faultType][\"Message\"]\r",
+                  "    ).to.eql(\"Supplier not found\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>99999</a:SupplierId>\r\n                    <a:TotalAmount>300.22</a:TotalAmount>\r\n                </request>\r\n            </CreatePurchaseOrder>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CreatePurchaseOrder - Invalid TotalAmount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "pm.test(\"Validation fault returned\", function () {\r",
+                  "    pm.expect(result).to.exist;\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "    \r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Invalid TotalAmount validation fault\", function () {\r",
+                  "\r",
+                  "    const detail = result[\"detail\"];\r",
+                  "    const faultType = Object.keys(detail)[0];\r",
+                  "\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "        .to.eql(\"Validation error\");\r",
+                  "\r",
+                  "    pm.expect(\r",
+                  "        detail[faultType][\"Message\"]\r",
+                  "    ).to.eql(\"Invalid TotalAmount\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation fault faultstring\", function () {\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "    .to.eql(\"Validation error\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>1</a:SupplierId>\r\n                    <a:TotalAmount>-100</a:TotalAmount>\r\n                </request>\r\n            </CreatePurchaseOrder>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "CreatePurchaseOrder - Invalid SupplierId",
           "event": [
             {
               "listen": "test",
@@ -427,19 +826,95 @@
                   "pm.test(\"Status code is 500\", function () {\r",
                   "    pm.response.to.have.status(500);\r",
                   "});\r",
-                  "const json = xml2Json(responseBody);\r",
                   "\r",
-                  "pm.test(\"Supplier not found message\", function () {\r",
+                  "const json = xml2Json(pm.response.text());\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "const fault =\r",
+                  "    json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "pm.test(\"Invalid supplier id validation fault\", function () {\r",
+                  "\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "        .to.eql(\"Validation error\")\r",
+                  "    ;\r",
+                  "\r",
+                  "    const detail = result[\"detail\"];\r",
+                  "    const faultType = Object.keys(detail)[0];\r",
+                  "\r",
                   "    pm.expect(\r",
-                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"faultstring\"]\r",
+                  "        detail[faultType][\"Message\"]\r",
+                  "    ).to.eql(\"Invalid supplier Id\");\r",
+                  "});\r",
+                  "pm.test(\"Validation fault returned\", function () {\r",
+                  "    pm.expect(result).to.exist;\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "    \r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <CreatePurchaseOrder xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:SupplierId>-1</a:SupplierId>\r\n                    <a:TotalAmount>300.22</a:TotalAmount>\r\n                </request>\r\n            </CreatePurchaseOrder>\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdatePurchaseOrderStatus - Validation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation fault returned\", function () {\r",
+                  "    pm.expect(result).to.exist;\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "    \r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Invalid status validation fault\", function () {\r",
+                  "\r",
+                  "    const detail = result[\"detail\"];\r",
+                  "    const faultType = Object.keys(detail)[0];\r",
+                  "\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "        .to.eql(\"Invalid status\")\r",
+                  "    ;\r",
+                  "\r",
+                  "    pm.expect(\r",
+                  "        detail[faultType][\"Message\"]\r",
                   "    ).to.eql(\"Invalid order status\");\r",
                   "});\r",
-                  "\r",
-                  "pm.test(\"Custom fault message\", function () {\r",
-                  "    pm.expect(\r",
-                  "        json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"][\"detail\"][\"InvalidOrderStatusFault\"][\"Message\"]\r",
-                  "    ).to.eql(\"Invalid order status\");\r",
-                  "});"
+                  ""
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -449,17 +924,131 @@
           ],
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "SOAPAction",
-                "value": "\"http://library.soapapi.org/ISupplierPurchaseOrderService/GetSupplierById\"",
-                "type": "text",
-                "disabled": true
-              }
-            ],
+            "header": [],
             "body": {
               "mode": "raw",
-              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>1</a:PurchaseOrderId>\r\n                <a:Status>dsfds</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <UpdatePurchaseOrderStatus  xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n                    <a:Status>{{UpdatePurchaseOrderStatus}}</a:Status>\r\n                </request>\r\n            </UpdatePurchaseOrderStatus >\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdatePurchaseOrderStatus - Conflict",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Conflict fault returned\", function () {\r",
+                  "    pm.expect(result).to.exist;\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "    \r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Conflict Fault already has this status\", function () {\r",
+                  "\r",
+                  "    pm.expect(result[\"faultstring\"])\r",
+                  "        .to.eql(\"Conflict\")\r",
+                  "    ;\r",
+                  "\r",
+                  "    pm.expect(\r",
+                  "        result[\"detail\"][\"ConflictFault\"][\"Message\"]\r",
+                  "    ).to.eql(\"Order already has this status\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope\r\n    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n    xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n    <soap:Body>\r\n        <UpdatePurchaseOrderStatus xmlns=\"http://library.soapapi.org/\">\r\n            <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                <a:PurchaseOrderId>{{purchaseOrderId}}</a:PurchaseOrderId>\r\n                <a:Status>{{PurchaseStatus}}</a:Status>\r\n            </request>\r\n        </UpdatePurchaseOrderStatus>\r\n    </soap:Body>\r\n</soap:Envelope>\r\n",
+              "options": {
+                "raw": {
+                  "language": "xml"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}",
+              "host": [
+                "{{Baseurl}}SupplierPurchaseOrderService{{urlEnding}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "UpdatePurchaseOrderStatus - Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = xml2Json(pm.response.text());\r",
+                  "\r",
+                  "const result =\r",
+                  "json[\"s:Envelope\"][\"s:Body\"][\"s:Fault\"];\r",
+                  "\r",
+                  "pm.test(\"Status code is 500\", function () {\r",
+                  "    pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Validation fault returned\", function () {\r",
+                  "    pm.expect(result).to.exist;\r",
+                  "    pm.expect(result[\"faultstring\"]).to.exist;\r",
+                  "    \r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Purchase not found fault\", function () {\r",
+                  "\r",
+                  "    pm.expect(result[\"faultstring\"]\r",
+                  "    ).to.eql(\"Purchase order not found\");\r",
+                  "\r",
+                  "    pm.expect(result[\"detail\"][\"NotFoundFault\"][\"Message\"])\r",
+                  "    .to.eql(\"Purchase order not found\"); \r",
+                  "    \r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "    <soap:Envelope\r\n        xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n        xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\r\n        xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n\r\n        <soap:Body>\r\n            <UpdatePurchaseOrderStatus  xmlns=\"http://library.soapapi.org/\">\r\n                <request xmlns:a=\"http://schemas.datacontract.org/2004/07/SoapApi.DTO.Requests\">\r\n                    <a:PurchaseOrderId>233</a:PurchaseOrderId>\r\n                    <a:Status>{{UpdatePurchaseOrderStatus}}</a:Status>\r\n                </request>\r\n            </UpdatePurchaseOrderStatus >\r\n        </soap:Body>\r\n    </soap:Envelope>\r\n",
               "options": {
                 "raw": {
                   "language": "xml"
@@ -476,6 +1065,30 @@
           "response": []
         }
       ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
     }
   ]
 }

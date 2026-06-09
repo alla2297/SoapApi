@@ -9,7 +9,9 @@
 - [Database Structure](#database-structure)
 - [Running the Service](#running-the-service)
     - [Environment Variables]
-    - [Run with Docker]
+    - [Run Locally with Docker Database]
+    - [Run Fully with Docker]
+    - [Fix 3: First Time Setup]
     - [Docker Compose Architecture]
 - [SOAP Endpoint](#soap-endpoint)
     - [WSDL] 
@@ -17,6 +19,7 @@
 - [SOAP Faults](#soap-faults)
 - [Testing](#testing)
 - [Future Improvements](#future-improvements)
+- [Security Considerations](#security-considerations)
 
 
 
@@ -74,9 +77,9 @@ External systems can use this SOAP API to:
 
 ### Faults
 
-* SupplierNotFoundFault
-* PurchaseOrderNotFoundFault
-* InvalidOrderStatusFault
+* NotFoundFault
+* ConflictFault
+* ValidationFault
 
 ### Additional Features
 
@@ -121,10 +124,14 @@ SoapApi
 │   └── AuditLog.cs
 │
 ├── Faults
-│   ├── SupplierNotFoundFault.cs
-│   ├── PurchaseOrderNotFoundFault.cs
-│   └── InvalidOrderStatusFault.cs
+│   ├── ConflictFault.cs
+│   ├── NotFoundFault.cs
+│   └── ValidationFault.cs
 │
+├── Security
+│   ├── SecurityValidator.cs
+│   └── InputValidator.cs
+|
 ├── Services
 │   ├── SupplierPurchaseOrderService.cs
 │   └── AuditService.cs
@@ -191,9 +198,9 @@ SOAP_DB_ROOT_PASSWORD=root123
 
 ---
 
-### Run with Docker
+### Run Locally with Docker Database
 
-Start MySQL:
+Start the MySQL container:
 
 ```bash
 docker compose up -d
@@ -205,9 +212,29 @@ Apply migrations:
 dotnet ef database update
 ```
 
-Run the application:
+Run the API locally:
 
 ```bash
+dotnet run
+```
+### Run Fully with Docker
+Build and start all containers:
+```
+docker compose up -d --build
+```
+The SOAP API will be available at:
+```
+http://localhost:5298/SupplierPurchaseOrderService.asmx
+```
+
+### Fix 3: First Time Setup
+
+Current:
+
+```bash
+docker compose up -d
+dotnet ef migrations add InitialCreate
+dotnet ef database update
 dotnet run
 ```
 
@@ -230,6 +257,8 @@ SOAP API
    ▼
 MySQL
 ```
+
+
 
 Start all services:
 
@@ -318,17 +347,17 @@ Updates the status of an existing purchase order.
 
 ## SOAP Faults
 
-### SupplierNotFoundFault
+### ConflictFault
 
-Returned when a supplier cannot be found.
+Returned when a requested operation would result in an invalid business state.
 
-### PurchaseOrderNotFoundFault
+### NotFoundFault
 
-Returned when a purchase order cannot be found.
+Returned when a requested entity cannot be found.
 
-### InvalidOrderStatusFault
+### ValidationFault
 
-Returned when an unsupported order status is provided.
+Returned when request data fails validation rules.
 
 Valid statuses:
 
@@ -352,9 +381,9 @@ Positive:
 * UpdatePurchaseOrderStatus
 
 Negative 
-* SupplierNotFoundFault test
-* PurchaseOrderNotFoundFault test
-* InvalidOrderStatusFault test
+* ConflictFault test
+* NotFoundFault test
+* ValidationFault test
 
 [Back to top](#table-of-contents)
 
@@ -375,6 +404,22 @@ Negative
 [Back to top](#table-of-contents)
 
 ---
+## Security Considerations
+
+### SQL Injection
+
+Protected through Entity Framework Core LINQ queries and parameterized SQL generation.
+
+### XSS
+
+Limited risk because the service returns XML responses and does not render user input as HTML. Input validation is implemented on request data.
+
+### CSRF
+
+The service is designed for system-to-system communication within a microservice architecture. Requests are received from trusted clients such as an API Gateway or other backend services. Since authentication is not based on browser cookies or user sessions, traditional CSRF attacks are not applicable.
+
+[Back to top](#table-of-contents)
+___ 
 
 ## Author
 

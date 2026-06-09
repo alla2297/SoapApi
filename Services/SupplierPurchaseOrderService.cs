@@ -25,19 +25,30 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     public GetSupplierByIdResponse GetSupplierById(
     GetSupplierByIdRequest request)
     {
+
+        if (request.SupplierId <= 0)
+        {
+            throw new FaultException<ValidationFault>(
+                new ValidationFault
+                {
+                    Message = "Invalid supplier Id"
+                },
+                new FaultReason("Validation error"));
+        }
+
         var supplier = _context.Suppliers
             .FirstOrDefault(s => s.SupplierId == request.SupplierId);
 
         if (supplier == null)
         {
-            throw new FaultException<SupplierNotFoundFault>(
-                new SupplierNotFoundFault
+            throw new FaultException<NotFoundFault>(
+                new NotFoundFault
                 {
                     Message = "Supplier not found"
                 },
                 new FaultReason("Supplier not found"));
         }
-        
+
         return new GetSupplierByIdResponse
         {
             SupplierId = supplier.SupplierId,
@@ -52,14 +63,23 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     public GetPurchaseOrderByIdResponse GetPurchaseOrderById(
      GetPurchaseOrderByIdRequest request)
     {
+        if (request.PurchaseOrderId <= 0)
+        {
+            throw new FaultException<ValidationFault>(
+                new ValidationFault
+                {
+                    Message = "Invalid purchase order Id"
+                },
+                new FaultReason("Validation error"));
+        }
         var order = _context.PurchaseOrders
             .FirstOrDefault(p =>
                 p.PurchaseOrderId == request.PurchaseOrderId);
 
         if (order == null)
         {
-            throw new FaultException<PurchaseOrderNotFoundFault>(
-                new PurchaseOrderNotFoundFault
+            throw new FaultException<NotFoundFault>(
+                new NotFoundFault
                 {
                     Message = "Purchase order not found"
                 },
@@ -82,19 +102,41 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     public CreatePurchaseOrderResponse CreatePurchaseOrder(
       CreatePurchaseOrderRequest request)
     {
+        if (request.SupplierId <= 0)
+        {
+            throw new FaultException<ValidationFault>(
+                new ValidationFault
+                {
+                    Message = "Invalid supplier Id"
+                },
+                new FaultReason("Validation error")
+            );
+        }
+
+        if (request.TotalAmount <= 0)
+        {
+            throw new FaultException<ValidationFault>(
+                new ValidationFault
+                {
+                    Message = "Invalid TotalAmount"
+                },
+                new FaultReason("Validation error")
+            );
+        }
+
         var supplier = _context.Suppliers
             .FirstOrDefault(s => s.SupplierId == request.SupplierId);
 
         if (supplier == null)
         {
-            throw new FaultException<SupplierNotFoundFault>(
-                new SupplierNotFoundFault
+            throw new FaultException<NotFoundFault>(
+                new NotFoundFault
                 {
                     Message = "Supplier not found"
                 },
                 new FaultReason("Supplier not found"));
         }
-
+        
         var order = new PurchaseOrder
         {
             SupplierId = request.SupplierId,
@@ -122,6 +164,29 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
     public UpdatePurchaseOrderStatusResponse UpdatePurchaseOrderStatus(
     UpdatePurchaseOrderStatusRequest request)
     {
+       
+
+        if (string.IsNullOrWhiteSpace(request.Status))
+        {
+            throw new FaultException<ValidationFault>(
+                new ValidationFault
+                {
+                    Message = "Invalid Status"
+                },
+                new FaultReason("Validation error")
+            );
+        }
+        
+        if (request.PurchaseOrderId <= 0)
+        {
+            throw new FaultException<ValidationFault>(
+                new ValidationFault
+                {
+                    Message = "Invalid purchase order Id"
+                },
+                new FaultReason("Validation error")
+            );
+        }
         var order = _context.PurchaseOrders
             .FirstOrDefault(p =>
                 p.PurchaseOrderId == request.PurchaseOrderId
@@ -129,17 +194,27 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
 
         if (order == null)
         {
-            throw new FaultException<PurchaseOrderNotFoundFault>(
-                new PurchaseOrderNotFoundFault
+            throw new FaultException<NotFoundFault>(
+                new NotFoundFault
                 {
                     Message = "Purchase order not found"
                 },
                 new FaultReason("Purchase order not found")
             );
         }
-        // to auditLog
+        if (order.Status.Equals(request.Status,StringComparison.OrdinalIgnoreCase))
+        {
+            throw new FaultException<ConflictFault>(
+                new ConflictFault
+                {
+                    Message = "Order already has this status"
+                },
+                new FaultReason("Conflict")
+            );
+        }
+        
 
-        string oldStatus = order.Status;
+        string oldStatus = order.Status; // to auditLog
         var validStatuses = new[]
         {
             "Pending",
@@ -150,15 +225,17 @@ public class SupplierPurchaseOrderService : ISupplierPurchaseOrderService
 
         if (!validStatuses.Contains(request.Status))
         {
-            throw new FaultException<InvalidOrderStatusFault>(
-                new InvalidOrderStatusFault
+            throw new FaultException<ValidationFault>(
+                new ValidationFault
                 {
                     Message = "Invalid order status"
                 },
-                new FaultReason("Invalid order status")
+                new FaultReason("Validation error")
             );
         }
        
+
+
         order.Status = request.Status;
 
         _context.SaveChanges();
